@@ -1,0 +1,31 @@
+import com.atlassian.jira.component.ComponentAccessor
+import com.atlassian.jira.ComponentManager
+import com.atlassian.jira.issue.fields.CustomField
+import com.atlassian.jira.issue.IssueManager
+import com.atlassian.jira.issue.MutableIssue
+import com.atlassian.jira.issue.ModifiedValue
+import com.atlassian.jira.issue.customfields.manager.OptionsManager
+import com.atlassian.jira.issue.fields.config.FieldConfig
+import com.atlassian.jira.user.util.UserUtil
+import  java.util.Date.*
+ 
+def optionsManager = ComponentAccessor.getOptionsManager()
+def customFieldManager = ComponentAccessor.getCustomFieldManager()
+ 
+def BUPriority = getFieldByName ("BU Priority") // id for BU Priority
+def PriorityLevelReason = getFieldByName ("Priority Level Reason") // id for Priority Level Reason customfield_14817
+ 
+
+PriorityLevelReason.setRequired(false) 
+PriorityLevelReason.setHidden(true)
+ 
+String BUPriorityChoice = (String) BUPriority.getValue()
+ 
+if (BUPriorityChoice.contains ("High")) { // this is the Bu Priority value
+ 
+   PriorityLevelReason.setRequired(true) 
+   PriorityLevelReason.setHidden(false)
+}  else    {
+    PriorityLevelReason.setRequired(false) 
+    PriorityLevelReason.setHidden(true)
+    }
